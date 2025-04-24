@@ -1,12 +1,22 @@
 use app::AppTrait;
-use flock::boid::Boid;
-use glium::{glutin::surface::WindowSurface, winit::{application::ApplicationHandler, event::{DeviceEvent, ElementState, MouseButton, WindowEvent}, event_loop, keyboard, window::Window}, Display, Program, Surface};
-use my_glium_util::canvas::{traits::{CanvasDrawable, Drawable}, Canvas, CanvasData};
+use flock::{Flock, boid::Boid};
+use glium::{
+    glutin::surface::WindowSurface, winit::{
+        application::ApplicationHandler, event::{DeviceEvent, ElementState, MouseButton, WindowEvent}, event_loop, keyboard, window::Window
+    }, Display, Program, Surface
+};
+use my_glium_util::{
+    canvas::{
+        Canvas, CanvasData,
+        traits::{CanvasDrawable, Drawable},
+    },
+    datastruct::aabb::Aabb,
+};
 
 mod app;
 mod flock;
 
-fn main(){
+fn main() {
     App::run(()).unwrap()
 }
 
@@ -57,6 +67,7 @@ impl ApplicationHandler for App {
             },
 
             WindowEvent::Resized(new_size) => {
+                println!("Resized");
                 self.display.resize(new_size.into());
                 self.main_canva.on_window_resized(new_size.into());
             }
@@ -146,31 +157,40 @@ impl ApplicationHandler for App {
 impl AppTrait for App {
     type InitUserParam = ();
 
-    fn init(event_loop:&mut event_loop::EventLoop<()>,window:Window,display :Display<WindowSurface>,_user_param:Self::InitUserParam)->Self {
-
+    fn init(
+        event_loop: &mut event_loop::EventLoop<()>,
+        window: Window,
+        display: Display<WindowSurface>,
+        _user_param: Self::InitUserParam,
+    ) -> Self {
         let frag_shad = std::fs::read_to_string("./shaders/boid.frag")
             .expect("could not load ./shaders/ball.frag");
         let vert_shad = std::fs::read_to_string("./shaders/canva.vert")
             .expect("could not load ./shaders/ball.vert");
         let program = Program::from_source(&display, &vert_shad, &frag_shad, None)
             .expect("could not compile shaders");
+    
 
         let mut main_canva = Canvas::new((0., 0.), program);
 
-        let resolution: (f32, f32) = (
+        let (r1, r2): (f32, f32) = (
             window.inner_size().width as f32,
             window.inner_size().height as f32,
         );
-    
 
-        let boid = Box::new(Boid::new(resolution));
-        main_canva.push_elem(boid);
+        let boids = (0..10).map(|i|Boid::new((
+            r1 / 2. + i as f32 * 4. + f32::cos(i as f32) * (r2 / 150.),
+            r2 / 2. + i as f32 * 4. + f32::sin(i as f32) * (r1 / 150.),
+        ),i)).collect();
+
+        let flock = Box::new(Flock::new(boids, Aabb::from_min_max((0., 0.), (r1, r2))));
+        main_canva.push_elem(flock);
 
         event_loop.set_control_flow(event_loop::ControlFlow::Poll);
 
         App {
             main_canva,
-    
+
             dt: 0.,
             time: std::time::Instant::now(),
             frame_nb_since_startup: 0,
@@ -180,7 +200,7 @@ impl AppTrait for App {
             benching_fps: false,
             display,
             _window: window,
-    
+
             mouse_position: (0., 0.),
             mouse_cliking: false,
         }

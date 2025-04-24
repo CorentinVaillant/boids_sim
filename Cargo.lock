@@ -581,9 +581,9 @@ checksum = "e2db585e1d738fc771bf08a151420d3ed193d9d895a36df7f6f8a9456b911ddc"
 
 [[package]]
 name = "libc"
-version = "0.2.171"
+version = "0.2.172"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c19937216e9d3aa9956d9bb8dfc0b0c8beb6058fc4f7a4dc4d850edf86a237d6"
+checksum = "d750af042f7ef4f724306de029d18836c26c1765a54a6a3f094cbd23a7267ffa"
 
 [[package]]
 name = "libloading"
@@ -654,7 +654,7 @@ dependencies = [
 [[package]]
 name = "my_glium_util"
 version = "0.1.0"
-source = "git+https://github.com/CorentinVaillant/my_glium_utils.git#03735b80f1009fde5bdc36a5384aa64635b51e99"
+source = "git+https://github.com/CorentinVaillant/my_glium_utils.git#360747efdad3102d1c2c0ed90e001a150eae0d5e"
 dependencies = [
  "glium",
  "my_rust_matrix_lib",
