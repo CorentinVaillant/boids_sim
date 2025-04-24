@@ -7,14 +7,14 @@ use my_glium_util::{
 pub mod boid;
 
 pub struct Flock {
-    boids: Quadtree<Boid, 10>,
+    boids: Quadtree<f32,Boid, 10>,
 
-    boundary: Aabb,
+    boundary: Aabb<f32>,
     z: f32,
 }
 
 impl Flock {
-    pub fn new(boids: Vec<Boid>, bound: Aabb) -> Self {
+    pub fn new(boids: Vec<Boid>, bound: Aabb<f32>) -> Self {
         Self {
             boids: Quadtree::new(bound, boids),
 

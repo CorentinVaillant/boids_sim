@@ -40,7 +40,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e89da841a80418a9b391ebaea17f5c112ffaaa96f621d2c285b5174da76b9011"
 dependencies = [
  "cfg-if",
- "getrandom 0.2.15",
+ "getrandom 0.2.16",
  "once_cell",
  "version_check",
  "zerocopy",
@@ -388,9 +388,9 @@ dependencies = [
 
 [[package]]
 name = "getrandom"
-version = "0.2.15"
+version = "0.2.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c4567c8db10ae91089c99af84c68c38da3ec2f087c3f82960bcdbf3656b6f4d7"
+checksum = "335ff9f135e4384c8150d6f27c6daed433577f86b4750418338c01a1a2528592"
 dependencies = [
  "cfg-if",
  "libc",
@@ -654,16 +654,18 @@ dependencies = [
 [[package]]
 name = "my_glium_util"
 version = "0.1.0"
-source = "git+https://github.com/CorentinVaillant/my_glium_utils.git#360747efdad3102d1c2c0ed90e001a150eae0d5e"
+source = "git+https://github.com/CorentinVaillant/my_glium_utils.git#1fc49260b8eac9bb792762b6ac01160e37cadd2e"
 dependencies = [
+ "arrayvec",
  "glium",
  "my_rust_matrix_lib",
+ "num",
 ]
 
 [[package]]
 name = "my_rust_matrix_lib"
 version = "0.1.0"
-source = "git+https://github.com/CorentinVaillant/my_rust_matrix_lib.git#91df949f3769446a35058428e09500d3dd9aff66"
+source = "git+https://github.com/CorentinVaillant/my_rust_matrix_lib.git#f52efe4f24285d954a13f4953f70ee7a4acaff38"
 dependencies = [
  "num",
  "num-traits",
@@ -1093,9 +1095,9 @@ dependencies = [
 
 [[package]]
 name = "proc-macro2"
-version = "1.0.94"
+version = "1.0.95"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a31971752e70b8b2686d7e46ec17fb38dad4051d94024c88df49b667caea9c84"
+checksum = "02b3e5e68a3a1a02aad3ec490a98007cbc13c37cbe84a3cd7b8e406d76e7f778"
 dependencies = [
  "unicode-ident",
 ]
@@ -1888,9 +1890,9 @@ dependencies = [
 
 [[package]]
 name = "winnow"
-version = "0.7.6"
+version = "0.7.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "63d3fcd9bba44b03821e7d699eeee959f3126dcc4aa8e4ae18ec617c2a5cea10"
+checksum = "6cb8234a863ea0e8cd7284fcdd4f145233eb00fee02bbdd9861aec44e6477bc5"
 dependencies = [
  "memchr",
 ]

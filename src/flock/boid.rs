@@ -1,8 +1,7 @@
 use glium::dynamic_uniform;
 use my_glium_util::{
     canvas::traits::CanvasDrawable,
-    datastruct::points::As2dPoint,
-    maths::{types::{Vec2, Vec3}, EuclidianSpace, VectorSpace},
+    datastruct::points::As2dPoint, math::{EuclidianSpace, Vec2, Vec3, VectorSpace},
 };
 
 pub struct Boid {
@@ -166,7 +165,18 @@ impl Boid {
         self.avg_color_denominator = 0.;
     }
 
+    const MIN_SPEED : f32 = 50.;
+
     pub fn apply_forces(&mut self, dt: f32) {
+        let speed = self.velocity.length();
+        if speed < Self::MIN_SPEED{
+            if speed <= 0.{
+                self.velocity = Vec2::from([Self::MIN_SPEED;2]) * 2.;
+            }else{
+                self.velocity = self.velocity.normalized() * Self::MIN_SPEED;
+            }
+        }
+
         self.position += self.velocity * dt;
     }
 
@@ -250,7 +260,7 @@ impl Boid {
     }
 }
 
-impl As2dPoint for Boid {
+impl As2dPoint<f32> for Boid {
     #[inline]
     fn x(&self) -> f32 {
         self.position[0]
